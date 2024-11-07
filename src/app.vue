@@ -457,7 +457,7 @@ const isLoading = ref(true);
                 ChipTube is a web service for play and share MIDI files.
               </div>
               <div class="text-grey-6">
-                &copy; {{ new Date().getFullYear() }} chiptube.io
+                &copy; {{ new Date().getFullYear() }} chiptu.be
               </div>
             </q-item-label>
           </q-list>

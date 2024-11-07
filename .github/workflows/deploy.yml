@@ -7,7 +7,7 @@ concurrency:
   group: ${{ github.ref }}
 env:
   AWS_REGION: ap-northeast-1
-  DOMAIN_NAME: chiptube.io
+  DOMAIN_NAME: chiptu.be
 jobs:
   deploy:
     runs-on: ubuntu-latest

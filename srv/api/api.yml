@@ -3,7 +3,7 @@ info:
   title: ChipTube API
   version: 1.0.0
 servers:
-  - url: https://api.chiptube.io
+  - url: https://api.chiptu.be
 paths:
   /tunes:
     get:
