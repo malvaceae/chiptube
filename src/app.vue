@@ -443,7 +443,7 @@ const isLoading = ref(true);
             <q-item-label header>
               Others
             </q-item-label>
-            <q-item href="https://github.com/malvaceae/chiptube.io" target="_blank" v-ripple>
+            <q-item href="https://github.com/malvaceae/chiptube" target="_blank" v-ripple>
               <q-item-section side>
                 <q-icon name="mdi-github" />
               </q-item-section>
