@@ -1,0 +1,44 @@
+{
+  "name": "chiptube",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "aws-blocks"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "dev": "tsx watch aws-blocks/scripts/server.ts",
+    "sandbox": "tsx aws-blocks/scripts/sandbox.ts",
+    "sandbox:destroy": "tsx aws-blocks/scripts/sandbox-destroy.ts",
+    "sandbox:console": "tsx aws-blocks/scripts/console.ts",
+    "deploy": "tsx aws-blocks/scripts/deploy.ts",
+    "destroy": "tsx aws-blocks/scripts/destroy.ts",
+    "cleanup": "tsx aws-blocks/scripts/cleanup.ts",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@aws-blocks/blocks": "^0.2.7",
+    "next": "^16.3.0",
+    "next-themes": "^0.4.6",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tsconfig/next": "^2.0.6",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "aws-cdk-lib": "^2.264.0",
+    "constructs": "^10.8.1",
+    "esbuild": "^0.28.2",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.12",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
