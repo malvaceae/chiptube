@@ -33,7 +33,7 @@
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "aws-cdk-lib": "^2.264.0",
+    "aws-cdk-lib": "^2.265.0",
     "constructs": "^10.8.1",
     "esbuild": "^0.28.2",
     "tailwindcss": "^4.3.3",
