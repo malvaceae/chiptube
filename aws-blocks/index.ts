@@ -14,10 +14,12 @@ import { createKyselyAdapter } from '@aws-blocks/bb-distributed-data';
 
 // Kysely
 import {
-  type Generated,
   CamelCasePlugin,
   sql,
 } from 'kysely';
+
+// スキーマ
+import type { Database } from './schema';
 
 // For coding agents: Leave these comments in place for future reference.
 // Read node_modules/@aws-blocks/blocks/README.md for all available Building Blocks
@@ -37,63 +39,13 @@ const tunes = new FileBucket(scope, 'tunes');
  * データベース
  */
 const db = new DistributedDatabase(scope, 'db', {
-  migrationsPath: 'aws-blocks/dsql-migrations',
+  migrationsPath: 'aws-blocks/migrations',
 });
-
-/**
- * データベーススキーマ
- */
-interface DatabaseSchema {
-  /**
-   * ユーザー
-   */
-  users: {
-    /**
-     * ID
-     */
-    id: Generated<string>;
-
-    /**
-     * OIDCユーザーID
-     */
-    oidcUserId: string;
-
-    /**
-     * ユーザー名
-     */
-    username: string;
-
-    /**
-     * メールアドレス
-     */
-    email: string | null;
-
-    /**
-     * プロフィール写真
-     */
-    picture: string | null;
-
-    /**
-     * 表示名
-     */
-    displayName: string | null;
-
-    /**
-     * 作成日時
-     */
-    createdAt: Generated<Date>;
-
-    /**
-     * 更新日時
-     */
-    updatedAt: Generated<Date>;
-  };
-}
 
 /**
  * Kyselyクエリビルダー
  */
-const kysely = createKyselyAdapter<DatabaseSchema>(db)
+const kysely = createKyselyAdapter<Database>(db)
   .withPlugin(new CamelCasePlugin());
 
 /**
