@@ -18,6 +18,9 @@ import {
 // AWS Blocks - Scripts
 import { getStackName } from '@aws-blocks/blocks/scripts';
 
+// Next.jsのウォームアップLambda関数
+import { NextjsWarmer } from './constructs/nextjs-warmer';
+
 /**
  * CDKアプリ
  */
@@ -64,7 +67,7 @@ if (sandboxMode) {
  * Next.jsのSSRホスティングを追加する
  */
 if (!sandboxMode) {
-  new Hosting(blocksStack, 'Hosting', {
+  const hosting = new Hosting(blocksStack, 'Hosting', {
     root: join(import.meta.dirname, '..'),
     buildCommand: 'npm run build',
     framework: 'nextjs',
@@ -73,4 +76,15 @@ if (!sandboxMode) {
       memorySize: 1536,
     },
   });
+
+  /**
+   * Next.jsのウォームアップLambda関数を追加する
+   */
+  if (hosting.ssrFunction) {
+    new NextjsWarmer(blocksStack, 'NextjsWarmer', {
+      root: join(import.meta.dirname, '..'),
+      ssrFunction: hosting.ssrFunction,
+      concurrency: 5,
+    });
+  }
 }
