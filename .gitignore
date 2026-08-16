@@ -15,6 +15,7 @@
 
 # next.js
 /.next/
+/.open-next/
 /out/
 
 # production
@@ -40,8 +41,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
 # AWS Blocks
+.bb-data
 .blocks-sandbox
-cdk.out/
-aws-blocks/client.js
 aws-blocks/blocks.spec.json
+aws-blocks/client.js

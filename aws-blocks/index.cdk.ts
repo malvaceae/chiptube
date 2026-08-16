@@ -1,43 +1,76 @@
-import * as cdk from 'aws-cdk-lib';
-import { RemovalPolicies, Mixins } from 'aws-cdk-lib';
+// Node.js - Path
+import { join } from 'node:path';
 
-import { Hosting, BlocksStack, SandboxDisableDeletionProtection } from '@aws-blocks/blocks/cdk';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+// AWS CDK
+import {
+  App,
+  Mixins,
+  RemovalPolicies,
+} from 'aws-cdk-lib';
+
+// AWS Blocks - CDK
+import {
+  BlocksStack,
+  Hosting,
+  SandboxDisableDeletionProtection,
+} from '@aws-blocks/blocks/cdk';
+
+// AWS Blocks - Scripts
 import { getStackName } from '@aws-blocks/blocks/scripts';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+/**
+ * CDKアプリ
+ */
+const app = new App();
 
-const app = new cdk.App();
-
+/**
+ * サンドボックスモードかどうか
+ */
 const sandboxMode = app.node.tryGetContext('sandboxMode') === 'true';
-const projectRoot = app.node.tryGetContext('projectRoot') || process.cwd();
 
-const stackName = getStackName({ sandbox: sandboxMode, projectRoot });
-export const blocksStack = await BlocksStack.create(app, stackName, {
-  backendHandlerPath: join(__dirname, 'index.handler.ts'),
-  backendCDKPath: join(__dirname, 'index.ts')
+/**
+ * プロジェクトルート
+ */
+const projectRoot = app.node.tryGetContext('projectRoot');
+
+/**
+ * スタック名
+ */
+const stackName = getStackName({
+  sandbox: sandboxMode,
+  projectRoot,
 });
 
+/**
+ * AWS Blocksスタック
+ */
+export const blocksStack = await BlocksStack.create(app, stackName, {
+  backendHandlerPath: join(import.meta.dirname, 'index.handler.ts'),
+  backendCDKPath: join(import.meta.dirname, 'index.ts')
+});
+
+/**
+ * サンドボックス破棄時に全リソースを削除する
+ */
 if (sandboxMode) {
-  // Make all resources deletable so sandbox:destroy can clean up the entire stack.
-  // This overrides removal policies and deletion protection (e.g. RDS) for every
-  // resource in the stack, including any you add below.
-  // Remove these lines if you want to manage teardown behavior yourself.
+  // 全リソースのRemovalPolicyをDESTROYに変更
   RemovalPolicies.of(blocksStack).destroy();
+
+  // 全リソースの削除保護を無効化
   Mixins.of(blocksStack).apply(new SandboxDisableDeletionProtection());
 }
 
-// Add Next.js SSR hosting only when deploying (not in sandbox mode)
+/**
+ * Next.jsのSSRホスティングを追加する
+ */
 if (!sandboxMode) {
   new Hosting(blocksStack, 'Hosting', {
-    root: join(__dirname, '..'),
+    root: join(import.meta.dirname, '..'),
     buildCommand: 'npm run build',
     framework: 'nextjs',
     api: blocksStack,
     compute: {
-      memorySize: 1024,
-      timeout: 30,
+      memorySize: 1536,
     },
   });
 }
