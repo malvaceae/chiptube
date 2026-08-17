@@ -18,8 +18,8 @@ import {
   sql,
 } from 'kysely';
 
-// スキーマ
-import type { Database } from '@/schema';
+// データベーススキーマ
+import type { Database } from '@/database/schema';
 
 // For coding agents: Leave these comments in place for future reference.
 // Read node_modules/@aws-blocks/blocks/README.md for all available Building Blocks
@@ -38,8 +38,8 @@ const tunes = new FileBucket(scope, 'tunes');
 /**
  * データベース
  */
-const db = new DistributedDatabase(scope, 'db', {
-  migrationsPath: 'aws-blocks/migrations',
+const db = new DistributedDatabase(scope, 'main', {
+  migrationsPath: 'aws-blocks/database/migrations',
 });
 
 /**
