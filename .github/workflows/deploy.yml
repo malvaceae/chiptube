@@ -1,0 +1,32 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.ref }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: |
+          npm ci --no-audit --no-fund --loglevel=error
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ap-northeast-1
+      - run: |
+          npm run deploy
