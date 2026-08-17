@@ -113,9 +113,6 @@ role.addToPolicy(new PolicyStatement({
     Fn.sub(DefaultStackSynthesizer.DEFAULT_FILE_ASSET_PUBLISHING_ROLE_ARN, {
       Qualifier: qualifier,
     }),
-    Fn.sub(DefaultStackSynthesizer.DEFAULT_IMAGE_ASSET_PUBLISHING_ROLE_ARN, {
-      Qualifier: qualifier,
-    }),
     Fn.sub(DefaultStackSynthesizer.DEFAULT_LOOKUP_ROLE_ARN, {
       Qualifier: qualifier,
     }),
