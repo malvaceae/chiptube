@@ -45,11 +45,19 @@ const stackName = getStackName({
 });
 
 /**
+ * AWS環境
+ */
+const env = Object.fromEntries(['account', 'region'].map((key) => {
+  return [key, process.env[`CDK_DEFAULT_${key.toUpperCase()}`]];
+}));
+
+/**
  * AWS Blocksスタック
  */
 export const blocksStack = await BlocksStack.create(app, stackName, {
   backendHandlerPath: join(import.meta.dirname, 'index.handler.ts'),
-  backendCDKPath: join(import.meta.dirname, 'index.ts')
+  backendCDKPath: join(import.meta.dirname, 'index.ts'),
+  env,
 });
 
 /**
@@ -78,6 +86,12 @@ if (!sandboxMode) {
     compute: {
       memorySize: 1536,
     },
+    ...(process.env.DOMAIN_NAME && {
+      domain: {
+        domainName: process.env.DOMAIN_NAME,
+        hostedZone: process.env.DOMAIN_NAME,
+      },
+    }),
   });
 
   /**
