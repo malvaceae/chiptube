@@ -22,7 +22,7 @@ import { getStackName } from '@aws-blocks/blocks/scripts';
 import { NextjsWarmer } from '@/constructs/nextjs-warmer';
 
 /**
- * CDKアプリ
+ * CDKアプリケーション
  */
 const app = new App();
 

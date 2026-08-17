@@ -24,22 +24,22 @@ import {
 } from 'aws-cdk-lib/aws-iam';
 
 /**
- * CDKアプリ
+ * CDKアプリケーション
  */
 const app = new App();
 
 /**
- * 所有者およびリポジトリの名前 (owner/repo)
+ * 所有者とリポジトリの名前 (owner/repo)
  */
 const repository = app.node.getContext('repository');
 
 /**
- * ブランチの名前
+ * ブランチ名
  */
 const branchName = app.node.getContext('branchName');
 
 /**
- * アプリの名前
+ * アプリケーション名
  */
 const { name: appName }: { name: string } = JSON.parse(
   readFileSync(
@@ -49,7 +49,7 @@ const { name: appName }: { name: string } = JSON.parse(
 );
 
 /**
- * スタックの名前
+ * スタック名
  */
 const stackName = [
   appName,
