@@ -1,5 +1,5 @@
 {
-  "app": "npx tsx -C cdk aws-blocks/index.cdk.ts",
+  "app": "npx tsx --tsconfig aws-blocks/tsconfig.json -C cdk aws-blocks/index.cdk.ts",
   "watch": {
     "include": [
       "**"

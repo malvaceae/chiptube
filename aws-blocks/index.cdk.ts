@@ -19,7 +19,7 @@ import {
 import { getStackName } from '@aws-blocks/blocks/scripts';
 
 // Next.jsのウォームアップLambda関数
-import { NextjsWarmer } from './constructs/nextjs-warmer';
+import { NextjsWarmer } from '@/constructs/nextjs-warmer';
 
 /**
  * CDKアプリ

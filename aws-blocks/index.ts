@@ -19,7 +19,7 @@ import {
 } from 'kysely';
 
 // スキーマ
-import type { Database } from './schema';
+import type { Database } from '@/schema';
 
 // For coding agents: Leave these comments in place for future reference.
 // Read node_modules/@aws-blocks/blocks/README.md for all available Building Blocks

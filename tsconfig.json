@@ -1,7 +1,7 @@
 {
   "extends": "@tsconfig/next/tsconfig.json",
   "compilerOptions": {
-    "target": "es2022",
+    "target": "es2017",
     "jsx": "react-jsx",
     "paths": {
       "@/*": [
@@ -16,5 +16,8 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
+  ],
+  "exclude": [
+    "aws-blocks"
   ]
 }

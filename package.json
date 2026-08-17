@@ -7,7 +7,7 @@
     "aws-blocks"
   ],
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc && tsc -p aws-blocks",
     "dev": "tsx watch aws-blocks/scripts/server.ts",
     "sandbox": "tsx aws-blocks/scripts/sandbox.ts",
     "sandbox:destroy": "tsx aws-blocks/scripts/sandbox-destroy.ts",
