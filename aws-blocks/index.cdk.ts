@@ -64,9 +64,12 @@ if (sandboxMode) {
 }
 
 /**
- * Next.jsのSSRホスティングを追加する
+ * 本番限定のリソースを追加する
  */
 if (!sandboxMode) {
+  /**
+   * Next.jsのSSRホスティング
+   */
   const hosting = new Hosting(blocksStack, 'Hosting', {
     root: join(import.meta.dirname, '..'),
     buildCommand: 'npm run build',

@@ -76,12 +76,12 @@ export class NextjsWarmer extends Function {
     // SSR Lambda関数の呼び出し権限を付与
     props.ssrFunction.grantInvoke(this);
 
-    // ウォームアップLambda関数の定期実行ルール
+    // Next.jsのウォームアップLambda関数の定期実行ルール
     const warmerRule = new Rule(this, 'WarmerRule', {
       schedule: Schedule.rate(Duration.minutes(5)),
     });
 
-    // ウォームアップLambda関数をターゲットとして追加
+    // Next.jsのウォームアップLambda関数を対象として追加
     warmerRule.addTarget(new LambdaFunction(this));
   }
 }
