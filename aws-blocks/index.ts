@@ -51,8 +51,8 @@ const kysely = createKyselyAdapter<Database>(db)
 /**
  * GoogleクライアントID・Googleクライアントシークレット
  */
-const [googleClientId, googleClientSecret] = ['id', 'secret'].map((name) => {
-  return new AppSetting(scope, `google-client-${name}`, { secret: true });
+const [googleClientId, googleClientSecret] = ['id', 'secret'].map((key) => {
+  return new AppSetting(scope, `google-client-${key}`, { secret: true });
 });
 
 /**
