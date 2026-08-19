@@ -18,7 +18,8 @@ export const metadata: Metadata = {
     default: 'ChipTube',
     template: '%s - ChipTube',
   },
-  description: 'Enjoy the tunes you love, upload original MIDI, and share it all with friends, family, and the world on ChipTube.',
+  description:
+    'Enjoy the tunes you love, upload original MIDI, and share it all with friends, family, and the world on ChipTube.',
 };
 
 /**
@@ -31,20 +32,13 @@ const notoSansJp = Noto_Sans_JP({
 /**
  * ルートレイアウト
  */
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang='ja'
-      suppressHydrationWarning
-    >
+    <html lang="ja" suppressHydrationWarning>
       <body className={notoSansJp.className}>
         <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
+          attribute="class"
+          defaultTheme="system"
           disableTransitionOnChange
           enableSystem
         >

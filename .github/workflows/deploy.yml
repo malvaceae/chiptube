@@ -23,12 +23,16 @@ jobs:
           node-version: 24
           cache: npm
       - run: |
-          npm ci --no-audit --no-fund --loglevel=error
+          npm ci \
+            --no-audit \
+            --no-fund \
+            --loglevel=error \
+            --prefer-offline
+      - run: npm run check
       - uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ap-northeast-1
       - env:
           DOMAIN_NAME: chiptu.be
-        run: |
-          npm run deploy
+        run: npm run deploy

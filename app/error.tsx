@@ -3,10 +3,6 @@
 /**
  * エラー
  */
-export default function Error({
-  error,
-}: {
-  error: Error & { digest?: string };
-}) {
+export default function Error({ error }: { error: Error & { digest?: string } }) {
   return <div>{error.message}</div>;
 }

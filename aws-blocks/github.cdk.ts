@@ -8,20 +8,10 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 // AWS CDK
-import {
-  App,
-  CfnOutput,
-  DefaultStackSynthesizer,
-  Fn,
-  Stack,
-} from 'aws-cdk-lib';
+import { App, CfnOutput, DefaultStackSynthesizer, Fn, Stack } from 'aws-cdk-lib';
 
 // AWS CDK - IAM
-import {
-  PolicyStatement,
-  Role,
-  WebIdentityPrincipal,
-} from 'aws-cdk-lib/aws-iam';
+import { PolicyStatement, Role, WebIdentityPrincipal } from 'aws-cdk-lib/aws-iam';
 
 /**
  * CDKアプリケーション
@@ -39,14 +29,14 @@ const repository = app.node.getContext('repository');
 const branchName = app.node.getContext('branchName');
 
 /**
+ * package.json
+ */
+const packageJson = readFileSync(join(import.meta.dirname, '..', 'package.json'), 'utf-8');
+
+/**
  * アプリケーション名
  */
-const { name: appName }: { name: string } = JSON.parse(
-  readFileSync(
-    join(import.meta.dirname, '..', 'package.json'),
-    'utf-8',
-  ),
-);
+const { name: appName }: { name: string } = JSON.parse(packageJson);
 
 /**
  * スタック名
@@ -98,26 +88,25 @@ const role = new Role(stack, 'Role', {
 /**
  * CDKブートストラップ修飾子
  */
-const qualifier = stack.synthesizer.bootstrapQualifier ??
-  DefaultStackSynthesizer.DEFAULT_QUALIFIER;
+const qualifier = stack.synthesizer.bootstrapQualifier ?? DefaultStackSynthesizer.DEFAULT_QUALIFIER;
 
 // CDKブートストラップロールのAssumeRole権限を付与
-role.addToPolicy(new PolicyStatement({
-  actions: [
-    'sts:AssumeRole',
-  ],
-  resources: [
-    Fn.sub(DefaultStackSynthesizer.DEFAULT_DEPLOY_ROLE_ARN, {
-      Qualifier: qualifier,
-    }),
-    Fn.sub(DefaultStackSynthesizer.DEFAULT_FILE_ASSET_PUBLISHING_ROLE_ARN, {
-      Qualifier: qualifier,
-    }),
-    Fn.sub(DefaultStackSynthesizer.DEFAULT_LOOKUP_ROLE_ARN, {
-      Qualifier: qualifier,
-    }),
-  ],
-}));
+role.addToPolicy(
+  new PolicyStatement({
+    actions: ['sts:AssumeRole'],
+    resources: [
+      Fn.sub(DefaultStackSynthesizer.DEFAULT_DEPLOY_ROLE_ARN, {
+        Qualifier: qualifier,
+      }),
+      Fn.sub(DefaultStackSynthesizer.DEFAULT_FILE_ASSET_PUBLISHING_ROLE_ARN, {
+        Qualifier: qualifier,
+      }),
+      Fn.sub(DefaultStackSynthesizer.DEFAULT_LOOKUP_ROLE_ARN, {
+        Qualifier: qualifier,
+      }),
+    ],
+  }),
+);
 
 // GitHubデプロイロールのARNを出力
 new CfnOutput(stack, 'RoleArn', {

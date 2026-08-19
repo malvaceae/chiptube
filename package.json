@@ -2,12 +2,16 @@
   "name": "chiptube",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "workspaces": [
     "aws-blocks"
   ],
+  "type": "module",
   "scripts": {
-    "typecheck": "tsc && tsc -p aws-blocks",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "check": "concurrently npm:lint npm:fmt:check",
     "dev": "tsx watch aws-blocks/scripts/server.ts",
     "sandbox": "tsx aws-blocks/scripts/sandbox.ts",
     "sandbox:destroy": "tsx aws-blocks/scripts/sandbox-destroy.ts",
@@ -34,8 +38,12 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "aws-cdk-lib": "^2.265.0",
+    "concurrently": "^10.0.5",
     "constructs": "^10.8.1",
     "esbuild": "^0.28.2",
+    "oxfmt": "^0.63.0",
+    "oxlint": "^1.78.0",
+    "oxlint-tsgolint": "^7.0.2001",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.12",
     "typescript": "^7.0.2"

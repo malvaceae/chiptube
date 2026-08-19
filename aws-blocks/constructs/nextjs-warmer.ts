@@ -6,19 +6,16 @@ import { Duration } from 'aws-cdk-lib';
 
 // AWS CDK - Lambda
 import {
-  type IFunction,
   Architecture,
   Code,
   Function,
+  type IFunction,
   LoggingFormat,
   Runtime,
 } from 'aws-cdk-lib/aws-lambda';
 
 // AWS CDK - EventBridge
-import {
-  Rule,
-  Schedule,
-} from 'aws-cdk-lib/aws-events';
+import { Rule, Schedule } from 'aws-cdk-lib/aws-events';
 
 // AWS CDK - EventBridge - Event Targets
 import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
@@ -54,11 +51,15 @@ export class NextjsWarmer extends Function {
    * Next.jsのウォームアップLambda関数を作成する
    */
   constructor(scope: Construct, id: string, props: NextjsWarmerProps) {
+    /**
+     * Next.jsのウォームアップLambda関数のコードが含まれるディレクトリ
+     */
+    const codeDir = join(props.root, '.open-next', 'warmer-function');
+
+    // Next.jsのウォームアップLambda関数を作成
     super(scope, id, {
       runtime: Runtime.NODEJS_24_X,
-      code: Code.fromAsset(
-        join(props.root, '.open-next', 'warmer-function'),
-      ),
+      code: Code.fromAsset(codeDir),
       handler: 'index.handler',
       timeout: Duration.seconds(10),
       environment: {

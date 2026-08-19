@@ -2,18 +2,10 @@
 import { join } from 'node:path';
 
 // AWS CDK
-import {
-  App,
-  Mixins,
-  RemovalPolicies,
-} from 'aws-cdk-lib';
+import { App, Mixins, RemovalPolicies } from 'aws-cdk-lib';
 
 // AWS Blocks - CDK
-import {
-  BlocksStack,
-  Hosting,
-  SandboxDisableDeletionProtection,
-} from '@aws-blocks/blocks/cdk';
+import { BlocksStack, Hosting, SandboxDisableDeletionProtection } from '@aws-blocks/blocks/cdk';
 
 // AWS Blocks - Scripts
 import { getStackName } from '@aws-blocks/blocks/scripts';
@@ -45,19 +37,15 @@ const stackName = getStackName({
 });
 
 /**
- * AWS環境
- */
-const env = Object.fromEntries(['account', 'region'].map((key) => {
-  return [key, process.env[`CDK_DEFAULT_${key.toUpperCase()}`]];
-}));
-
-/**
  * AWS Blocksスタック
  */
 export const blocksStack = await BlocksStack.create(app, stackName, {
   backendHandlerPath: join(import.meta.dirname, 'index.handler.ts'),
   backendCDKPath: join(import.meta.dirname, 'index.ts'),
-  env,
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: process.env.CDK_DEFAULT_REGION,
+  },
 });
 
 /**

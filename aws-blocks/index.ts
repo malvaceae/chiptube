@@ -13,10 +13,7 @@ import {
 import { createKyselyAdapter } from '@aws-blocks/bb-distributed-data';
 
 // Kysely
-import {
-  CamelCasePlugin,
-  sql,
-} from 'kysely';
+import { CamelCasePlugin, sql } from 'kysely';
 
 // データベーススキーマ
 import type { Database } from '@/database/schema';
@@ -45,8 +42,7 @@ const db = new DistributedDatabase(scope, 'main', {
 /**
  * Kyselyクエリビルダー
  */
-const kysely = createKyselyAdapter<Database>(db)
-  .withPlugin(new CamelCasePlugin());
+const kysely = createKyselyAdapter<Database>(db).withPlugin(new CamelCasePlugin());
 
 /**
  * GoogleクライアントID・Googleクライアントシークレット
@@ -68,9 +64,7 @@ const auth = new AuthOIDC(scope, 'auth', {
   ],
   async onSignIn(user) {
     // プロフィール写真
-    const picture = typeof user.claims.picture === 'string'
-      ? user.claims.picture
-      : null;
+    const picture = typeof user.claims.picture === 'string' ? user.claims.picture : null;
 
     // ユーザーを作成
     await kysely
@@ -82,14 +76,12 @@ const auth = new AuthOIDC(scope, 'auth', {
         picture,
       })
       .onConflict((builder) => {
-        return builder
-          .column('oidcUserId')
-          .doUpdateSet({
-            username: user.username,
-            email: user.email,
-            picture,
-            updatedAt: sql`CURRENT_TIMESTAMP`,
-          });
+        return builder.column('oidcUserId').doUpdateSet({
+          username: user.username,
+          email: user.email,
+          picture,
+          updatedAt: sql`CURRENT_TIMESTAMP`,
+        });
       })
       .execute();
   },
