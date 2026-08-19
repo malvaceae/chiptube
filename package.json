@@ -22,7 +22,7 @@
     "@aws-blocks/bb-distributed-data": "^0.1.5",
     "@aws-blocks/blocks": "^0.2.7",
     "kysely": "^0.28.17",
-    "next": "^16.3.0",
+    "next": "^16.3.1",
     "next-themes": "^0.4.6",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
