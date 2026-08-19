@@ -20,7 +20,8 @@
     "destroy": "tsx aws-blocks/scripts/destroy.ts",
     "cleanup": "tsx aws-blocks/scripts/cleanup.ts",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prepare": "husky"
   },
   "dependencies": {
     "@aws-blocks/bb-distributed-data": "^0.1.5",
@@ -41,6 +42,8 @@
     "concurrently": "^10.0.5",
     "constructs": "^10.8.1",
     "esbuild": "^0.28.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0",
     "oxfmt": "^0.63.0",
     "oxlint": "^1.78.0",
     "oxlint-tsgolint": "^7.0.2001",
