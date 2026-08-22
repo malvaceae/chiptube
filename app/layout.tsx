@@ -7,6 +7,9 @@ import { Noto_Sans_JP } from 'next/font/google';
 // Next.js - Themes
 import { ThemeProvider } from 'next-themes';
 
+// shadcn/ui - Tooltip
+import { TooltipProvider } from '@/components/ui/tooltip';
+
 // Styles
 import '@/app/globals.css';
 
@@ -42,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           disableTransitionOnChange
           enableSystem
         >
-          {children}
+          <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
