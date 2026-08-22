@@ -19,6 +19,7 @@
     "cleanup": "tsx aws-blocks/scripts/cleanup.ts",
     "deploy": "tsx aws-blocks/scripts/deploy.ts",
     "destroy": "tsx aws-blocks/scripts/destroy.ts",
+    "github": "tsx aws-blocks/scripts/github.ts",
     "build": "next build",
     "start": "next start",
     "prepare": "husky"
