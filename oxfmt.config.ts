@@ -17,6 +17,10 @@ const config = defineConfig({
     'aws-blocks/scripts/server.ts',
     'cdk.context.json',
     'cdk.json',
+    'components.json',
+    'components/ui/',
+    'hooks/use-mobile.ts',
+    'lib/utils.ts',
   ],
   singleQuote: true,
   sortTailwindcss: {

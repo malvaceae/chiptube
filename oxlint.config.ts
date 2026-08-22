@@ -13,6 +13,9 @@ const config = defineConfig({
     'aws-blocks/scripts/sandbox-destroy.ts',
     'aws-blocks/scripts/sandbox.ts',
     'aws-blocks/scripts/server.ts',
+    'components/ui/',
+    'hooks/use-mobile.ts',
+    'lib/utils.ts',
   ],
   plugins: ['eslint', 'jsx-a11y', 'nextjs', 'oxc', 'react', 'typescript', 'unicorn'],
   options: {
