@@ -16,7 +16,7 @@ import { createKyselyAdapter } from '@aws-blocks/bb-distributed-data';
 import { CamelCasePlugin, sql } from 'kysely';
 
 // データベーススキーマ
-import type { Database } from '@/database/schema';
+import type { Database } from './database/schema';
 
 // For coding agents: Leave these comments in place for future reference.
 // Read node_modules/@aws-blocks/blocks/README.md for all available Building Blocks
