@@ -1,17 +1,11 @@
-// Node.js - Crypto
-import { createHash } from 'node:crypto';
-
-// Node.js - File system
-import { readFileSync } from 'node:fs';
-
-// Node.js - Path
-import { join } from 'node:path';
-
 // AWS CDK
 import { App, CfnOutput, DefaultStackSynthesizer, Fn, Stack } from 'aws-cdk-lib';
 
 // AWS CDK - IAM
 import { PolicyStatement, Role, WebIdentityPrincipal } from 'aws-cdk-lib/aws-iam';
+
+// AWS Blocks - Scripts
+import { getStackId } from '@aws-blocks/blocks/scripts';
 
 /**
  * CDKアプリケーション
@@ -19,71 +13,58 @@ import { PolicyStatement, Role, WebIdentityPrincipal } from 'aws-cdk-lib/aws-iam
 const app = new App();
 
 /**
- * 所有者とリポジトリの名前 (owner/repo)
+ * 所有者名とリポジトリ名 (owner/repo)
  */
-const repository = app.node.getContext('repository');
+const repository: string = app.node.getContext('repository');
 
 /**
- * ブランチ名
+ * ブランチ名 (main,develop,feature/*)
  */
-const branchName = app.node.getContext('branchName');
+const branchName: string = app.node.getContext('branchName');
 
 /**
- * package.json
+ * ブランチ名の配列
  */
-const packageJson = readFileSync(join(import.meta.dirname, '..', 'package.json'), 'utf-8');
-
-/**
- * アプリケーション名
- */
-const { name: appName }: { name: string } = JSON.parse(packageJson);
+const branchNames = branchName.split(',').map((branchName) => branchName.trim());
 
 /**
  * スタック名
  */
-const stackName = [
-  appName,
-  'github-deployment',
-  createHash('sha256').update(repository).digest('hex').slice(0, 12),
-  createHash('sha256').update(branchName).digest('hex').slice(0, 12),
-].join('-');
+const stackName = `${getStackId()}-github`;
 
 /**
- * スタック
+ * GitHubスタック
  */
 const stack = new Stack(app, stackName);
 
 /**
  * GitHub OIDCプロバイダーの発行者
  */
-const githubOidcProviderIssuer = 'token.actions.githubusercontent.com';
+const oidcProviderIssuer = 'token.actions.githubusercontent.com';
 
 /**
  * GitHub OIDCプロバイダーのARN
  */
-const githubOidcProviderArn = `arn:aws:iam::${stack.account}:oidc-provider/${githubOidcProviderIssuer}`;
+const oidcProviderArn = `arn:aws:iam::${stack.account}:oidc-provider/${oidcProviderIssuer}`;
 
 /**
- * audクレーム
+ * GitHubデプロイロールの信頼ポリシー
  */
-const aud = 'sts.amazonaws.com';
-
-/**
- * subクレーム
- */
-const sub = `repo:${repository}:ref:refs/heads/${branchName}`;
+const assumedBy = new WebIdentityPrincipal(oidcProviderArn, {
+  StringEquals: {
+    [`${oidcProviderIssuer}:aud`]: 'sts.amazonaws.com',
+  },
+  StringLike: {
+    [`${oidcProviderIssuer}:sub`]: branchNames.map((branchName) => {
+      return `repo:${repository}:ref:refs/heads/${branchName}`;
+    }),
+  },
+});
 
 /**
  * GitHubデプロイロール
  */
-const role = new Role(stack, 'Role', {
-  assumedBy: new WebIdentityPrincipal(githubOidcProviderArn, {
-    StringEquals: {
-      [`${githubOidcProviderIssuer}:aud`]: aud,
-      [`${githubOidcProviderIssuer}:sub`]: sub,
-    },
-  }),
-});
+const deployRole = new Role(stack, 'DeployRole', { assumedBy });
 
 /**
  * CDKブートストラップ修飾子
@@ -91,7 +72,7 @@ const role = new Role(stack, 'Role', {
 const qualifier = stack.synthesizer.bootstrapQualifier ?? DefaultStackSynthesizer.DEFAULT_QUALIFIER;
 
 // CDKブートストラップロールのAssumeRole権限を付与
-role.addToPolicy(
+deployRole.addToPolicy(
   new PolicyStatement({
     actions: ['sts:AssumeRole'],
     resources: [
@@ -109,6 +90,6 @@ role.addToPolicy(
 );
 
 // GitHubデプロイロールのARNを出力
-new CfnOutput(stack, 'RoleArn', {
-  value: role.roleArn,
+new CfnOutput(stack, 'DeployRoleArn', {
+  value: deployRole.roleArn,
 });
