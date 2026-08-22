@@ -16,9 +16,9 @@
     "sandbox": "tsx aws-blocks/scripts/sandbox.ts",
     "sandbox:destroy": "tsx aws-blocks/scripts/sandbox-destroy.ts",
     "sandbox:console": "tsx aws-blocks/scripts/console.ts",
+    "cleanup": "tsx aws-blocks/scripts/cleanup.ts",
     "deploy": "tsx aws-blocks/scripts/deploy.ts",
     "destroy": "tsx aws-blocks/scripts/destroy.ts",
-    "cleanup": "tsx aws-blocks/scripts/cleanup.ts",
     "build": "next build",
     "start": "next start",
     "prepare": "husky"
