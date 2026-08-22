@@ -5,7 +5,13 @@ import { defineConfig } from 'oxfmt';
  * Oxfmtの設定
  */
 const config = defineConfig({
-  ignorePatterns: ['aws-blocks/scripts/**', 'cdk.json'],
+  ignorePatterns: [
+    '.blocks/config.json',
+    'aws-blocks/package.json',
+    'aws-blocks/scripts/**',
+    'cdk.context.json',
+    'cdk.json',
+  ],
   singleQuote: true,
   sortTailwindcss: {
     functions: ['clsx', 'cn', 'cva'],
