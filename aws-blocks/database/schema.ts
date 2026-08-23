@@ -9,6 +9,11 @@ export interface Database {
    * ユーザーテーブル
    */
   users: UserTable;
+
+  /**
+   * チューンテーブル
+   */
+  tunes: TuneTable;
 }
 
 /**
@@ -44,6 +49,66 @@ export interface UserTable {
    * 表示名
    */
   displayName: string | null;
+
+  /**
+   * 作成日時
+   */
+  createdAt: Generated<Date>;
+
+  /**
+   * 更新日時
+   */
+  updatedAt: Generated<Date>;
+}
+
+/**
+ * チューンテーブル
+ */
+export interface TuneTable {
+  /**
+   * ID
+   */
+  id: string;
+
+  /**
+   * ユーザーID
+   */
+  userId: string;
+
+  /**
+   * タイトル
+   */
+  title: string;
+
+  /**
+   * 説明
+   */
+  description: string;
+
+  /**
+   * ステータス
+   */
+  status: 'DRAFT' | 'PUBLISHED' | 'UNPUBLISHED';
+
+  /**
+   * MIDIファイルのS3キー
+   */
+  midiS3Key: string;
+
+  /**
+   * サムネイルファイルのS3キー
+   */
+  thumbnailS3Key: string | null;
+
+  /**
+   * 公開日時
+   */
+  publishedAt: Date | null;
+
+  /**
+   * 削除日時
+   */
+  deletedAt: Date | null;
 
   /**
    * 作成日時

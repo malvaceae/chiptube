@@ -63,7 +63,9 @@ const auth = new AuthOIDC(scope, 'auth', {
     }),
   ],
   async onSignIn(user) {
-    // プロフィール写真
+    /**
+     * プロフィール写真
+     */
     const picture = typeof user.claims.picture === 'string' ? user.claims.picture : null;
 
     // ユーザーを作成
@@ -75,14 +77,14 @@ const auth = new AuthOIDC(scope, 'auth', {
         email: user.email,
         picture,
       })
-      .onConflict((builder) => {
-        return builder.column('oidcUserId').doUpdateSet({
+      .onConflict((oc) =>
+        oc.column('oidcUserId').doUpdateSet({
           username: user.username,
           email: user.email,
           picture,
           updatedAt: sql`CURRENT_TIMESTAMP`,
-        });
-      })
+        }),
+      )
       .execute();
   },
 });
@@ -92,13 +94,15 @@ const auth = new AuthOIDC(scope, 'auth', {
  */
 export const api = new ApiNamespace(scope, 'api', (context) => ({
   /**
-   * ログインユーザーの情報を取得する
+   * ログインユーザーを取得する
    */
   async me() {
-    // ログインユーザー
+    /**
+     * OIDCユーザー
+     */
     const user = await auth.requireAuth(context);
 
-    // ログインユーザーの情報を取得
+    // ログインユーザーを取得
     return await kysely
       .selectFrom('users')
       .selectAll()

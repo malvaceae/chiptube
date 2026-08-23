@@ -1,7 +1,7 @@
 -- ユーザー
 CREATE TABLE users (
   -- ID
-  id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   -- OIDCユーザーID
   oidc_user_id TEXT NOT NULL UNIQUE,
   -- ユーザー名
