@@ -26,15 +26,12 @@ const sandboxMode = app.node.tryGetContext('sandboxMode') === 'true';
 /**
  * プロジェクトルート
  */
-const projectRoot = app.node.tryGetContext('projectRoot');
+const projectRoot = app.node.tryGetContext('projectRoot') || process.cwd();
 
 /**
  * スタック名
  */
-const stackName = getStackName({
-  sandbox: sandboxMode,
-  projectRoot,
-});
+const stackName = getStackName({ sandbox: sandboxMode, projectRoot });
 
 /**
  * AWS Blocksスタック
