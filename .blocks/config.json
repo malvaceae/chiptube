@@ -1,3 +1,6 @@
 {
-  "stackId": "chiptube-af9d01"
+  "stackId": "chiptube-af9d01",
+  "telemetry": {
+    "enabled": false
+  }
 }
