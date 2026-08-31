@@ -2,10 +2,10 @@
 import { join } from 'node:path';
 
 // AWS CDK
-import { App, Mixins, RemovalPolicies } from 'aws-cdk-lib';
+import { App } from 'aws-cdk-lib';
 
 // AWS Blocks - CDK
-import { BlocksStack, Hosting, SandboxDisableDeletionProtection } from '@aws-blocks/blocks/cdk';
+import { BlocksPresets, BlocksStack, Hosting } from '@aws-blocks/blocks/cdk';
 
 // AWS Blocks - Scripts
 import { getStackName } from '@aws-blocks/blocks/scripts';
@@ -29,6 +29,11 @@ const sandboxMode = app.node.tryGetContext('sandboxMode') === 'true';
 const projectRoot = app.node.tryGetContext('projectRoot') || process.cwd();
 
 /**
+ * RemovalPolicyと削除保護のプリセット
+ */
+const defaults = sandboxMode ? BlocksPresets.sandbox : BlocksPresets.production;
+
+/**
  * スタック名
  */
 const stackName = getStackName({ sandbox: sandboxMode, projectRoot });
@@ -39,22 +44,12 @@ const stackName = getStackName({ sandbox: sandboxMode, projectRoot });
 export const blocksStack = await BlocksStack.create(app, stackName, {
   backendHandlerPath: join(import.meta.dirname, 'index.handler.ts'),
   backendCDKPath: join(import.meta.dirname, 'index.ts'),
+  defaults,
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
 });
-
-/**
- * サンドボックス破棄時に全リソースを削除する
- */
-if (sandboxMode) {
-  // 全リソースのRemovalPolicyをDESTROYに変更
-  RemovalPolicies.of(blocksStack).destroy();
-
-  // 全リソースの削除保護を無効化
-  Mixins.of(blocksStack).apply(new SandboxDisableDeletionProtection());
-}
 
 /**
  * 本番限定のリソースを追加する
