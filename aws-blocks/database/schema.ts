@@ -19,6 +19,11 @@ export interface Database {
    * チューンコメントテーブル
    */
   tuneComments: TuneCommentTable;
+
+  /**
+   * チューン高評価テーブル
+   */
+  tuneLikes: TuneLikeTable;
 }
 
 /**
@@ -149,6 +154,31 @@ export interface TuneCommentTable {
    * 本文
    */
   body: string;
+
+  /**
+   * 作成日時
+   */
+  createdAt: Generated<Date>;
+
+  /**
+   * 更新日時
+   */
+  updatedAt: Generated<Date>;
+}
+
+/**
+ * チューン高評価テーブル
+ */
+export interface TuneLikeTable {
+  /**
+   * チューンID
+   */
+  tuneId: string;
+
+  /**
+   * ユーザーID
+   */
+  userId: string;
 
   /**
    * 作成日時
