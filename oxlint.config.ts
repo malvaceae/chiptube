@@ -13,10 +13,6 @@ const config = defineConfig({
     'lib/utils.ts',
   ],
   plugins: ['eslint', 'jsx-a11y', 'nextjs', 'oxc', 'react', 'typescript', 'unicorn'],
-  options: {
-    typeAware: true,
-    typeCheck: true,
-  },
 });
 
 export default config;

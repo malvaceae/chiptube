@@ -48,5 +48,6 @@ cdk.out
 # AWS Blocks
 .bb-data
 .blocks-sandbox
+.blocks/hosting-values.d.ts
 aws-blocks/blocks.spec.json
 aws-blocks/client.js

@@ -14,5 +14,11 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     ".blocks/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "aws-blocks/index.cdk.ts",
+    "aws-blocks/github.cdk.ts",
+    "aws-blocks/scripts"
   ]
 }
