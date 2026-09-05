@@ -12,7 +12,17 @@ const config = defineConfig({
     'hooks/use-mobile.ts',
     'lib/utils.ts',
   ],
-  plugins: ['eslint', 'jsx-a11y', 'nextjs', 'oxc', 'react', 'typescript', 'unicorn'],
+  plugins: [
+    'eslint',
+    'jsdoc',
+    'jsx-a11y',
+    'nextjs',
+    'oxc',
+    'promise',
+    'react',
+    'typescript',
+    'unicorn',
+  ],
 });
 
 export default config;
