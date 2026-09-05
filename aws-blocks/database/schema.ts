@@ -14,6 +14,11 @@ export interface Database {
    * チューンテーブル
    */
   tunes: TuneTable;
+
+  /**
+   * チューンコメントテーブル
+   */
+  tuneComments: TuneCommentTable;
 }
 
 /**
@@ -109,6 +114,41 @@ export interface TuneTable {
    * 削除日時
    */
   deletedAt: Date | null;
+
+  /**
+   * 作成日時
+   */
+  createdAt: Generated<Date>;
+
+  /**
+   * 更新日時
+   */
+  updatedAt: Generated<Date>;
+}
+
+/**
+ * チューンコメントテーブル
+ */
+export interface TuneCommentTable {
+  /**
+   * ID
+   */
+  id: Generated<string>;
+
+  /**
+   * チューンID
+   */
+  tuneId: string;
+
+  /**
+   * ユーザーID
+   */
+  userId: string;
+
+  /**
+   * 本文
+   */
+  body: string;
 
   /**
    * 作成日時
