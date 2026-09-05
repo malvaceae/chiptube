@@ -24,6 +24,11 @@ export interface Database {
    * チューン高評価テーブル
    */
   tuneLikes: TuneLikeTable;
+
+  /**
+   * チューン閲覧数テーブル
+   */
+  tuneViews: TuneViewTable;
 }
 
 /**
@@ -179,6 +184,36 @@ export interface TuneLikeTable {
    * ユーザーID
    */
   userId: string;
+
+  /**
+   * 作成日時
+   */
+  createdAt: Generated<Date>;
+
+  /**
+   * 更新日時
+   */
+  updatedAt: Generated<Date>;
+}
+
+/**
+ * チューン閲覧数テーブル
+ */
+export interface TuneViewTable {
+  /**
+   * ID
+   */
+  id: Generated<string>;
+
+  /**
+   * チューンID
+   */
+  tuneId: string;
+
+  /**
+   * IPアドレス
+   */
+  ipAddress: string;
 
   /**
    * 作成日時
