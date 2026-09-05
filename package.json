@@ -19,6 +19,8 @@
     "cleanup": "tsx aws-blocks/scripts/cleanup.ts",
     "deploy": "tsx aws-blocks/scripts/deploy.ts",
     "destroy": "tsx aws-blocks/scripts/destroy.ts",
+    "secret": "tsx aws-blocks/scripts/secret.ts",
+    "typegen": "tsx aws-blocks/scripts/typegen.ts",
     "github": "tsx aws-blocks/scripts/github.ts",
     "build": "next build",
     "start": "next start",
@@ -27,6 +29,7 @@
   "dependencies": {
     "@aws-blocks/bb-distributed-data": "^0.1.7",
     "@aws-blocks/blocks": "^0.4.0",
+    "@aws-blocks/hosting": "^0.2.0",
     "@base-ui/react": "^1.7.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

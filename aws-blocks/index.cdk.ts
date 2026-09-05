@@ -29,11 +29,6 @@ const sandboxMode = app.node.tryGetContext('sandboxMode') === 'true';
 const projectRoot = app.node.tryGetContext('projectRoot') || process.cwd();
 
 /**
- * RemovalPolicyと削除保護のプリセット
- */
-const defaults = sandboxMode ? BlocksPresets.sandbox : BlocksPresets.production;
-
-/**
  * スタック名
  */
 const stackName = getStackName({ sandbox: sandboxMode, projectRoot });
@@ -44,7 +39,7 @@ const stackName = getStackName({ sandbox: sandboxMode, projectRoot });
 export const blocksStack = await BlocksStack.create(app, stackName, {
   backendHandlerPath: join(import.meta.dirname, 'index.handler.ts'),
   backendCDKPath: join(import.meta.dirname, 'index.ts'),
-  defaults,
+  defaults: sandboxMode ? BlocksPresets.sandbox : BlocksPresets.production,
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
